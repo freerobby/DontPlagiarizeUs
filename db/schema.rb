@@ -9,22 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100415055338) do
+ActiveRecord::Schema.define(:version => 20100415080917) do
 
   create_table "detections", :force => true do |t|
-    t.integer  "user_id",    :null => false
+    t.integer  "user_id",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "last_tweet_twitter_id", :default => 0, :null => false
   end
 
   create_table "tweets", :force => true do |t|
     t.integer  "user_id"
     t.integer  "detection_id"
     t.string   "text"
+    t.string   "author"
     t.string   "twitter_id"
     t.datetime "tweeted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "plagiarism_of"
   end
 
   create_table "users", :force => true do |t|

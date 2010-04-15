@@ -1,0 +1,16 @@
+<% if current_user.detection.tweets.author_not_null.count == 0 %>
+  <h1>Good news!</h1>
+  <p>You have not been plagiarized!</p>
+<% else %>
+  <h1>Suspected plagiarism:</h1>
+  <ul>
+  <% current_user.detection.tweets.author_not_null.each do |tweet| %>
+    <li>
+      <a href="http://twitter.com/<%= tweet.author %>/status/<%= tweet.twitter_id %>"><b><%= tweet.author %></b>: <%= tweet.text %></a>
+      <% plagiarized = Tweet.find(tweet.plagiarism_of)%>
+      <a href="http://twitter.com/<%= plagiarized.user.login %>/status/<%= plagiarized.twitter_id %>">[original]</a>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<p><%= link_to "Update", detection_path, :method => :put %></p>

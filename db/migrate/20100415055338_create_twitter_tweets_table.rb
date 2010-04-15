@@ -7,6 +7,7 @@ class CreateTwitterTweetsTable < ActiveRecord::Migration
       
       # Fields
       t.string :text
+      t.string :author
       t.string :twitter_id
       t.timestamp :tweeted_at
       

@@ -6,6 +6,10 @@
   	<title>Don't Plagiarize!</title>
   </head>
   <body>
+    <div>
+      <p style="color: green"><%= flash[:notice] %></p>
+      <p style="color: red"><%= flash[:error] %></p>
+    </div>
     <% if logged_in? %>
       <div id="logout">
         <a href="/logout">Logout</a>
