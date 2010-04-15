@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<%= stylesheet_link_tag 'main' %>
+	<%= javascript_include_tag :defaults %>
+	<title>Don't Plagiarize Us!</title>
+</head>
+<body>
+	<div id="content">	  
+    <%= render :partial => "layouts/session_status" %>
+	  
+	  <div id="logo">
+			<h1><a href="/">Don't Plagiarize Us!</a></h1>
+		</div>
+	  
+	  <%= render :partial => "layouts/top_navigation" %>
+		
+    <div class="line"></div>
+		
+		<p style="color: green">
+	    <%= flash[:notice] %>
+	  </p>
+	  <p style="color: red">
+	    <%= flash[:error] %>
+	  </p>
+	  
+	  <div style="min-height: 500px;">
+      <%= yield %>
+    </div>
+		
+		<div id="footer">
+			<p>
+			  Developed by <a href="http://freerobby.com">Robby Grossman</a> |
+			  Design based on the work of <a href="http://www.solucija.com">Luka Cvrk</a>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

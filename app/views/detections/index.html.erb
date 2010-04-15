@@ -1,0 +1,27 @@
+<div style="">
+  <%= render :partial => "new" %>
+</div>
+<table id="brews_table">
+<thead>
+  <tr>
+    <th>Twitter User</th>
+    <th>Tweets Examined</th>
+    <th>Times Plagiarized</th>
+  </tr>
+</thead>
+<tbody>  
+<% @detections.each do |detection| %>
+  <tr onclick="javascript:location.href='<%= profile_path(detection) %>';">
+    <td align="center">
+      <%=h detection.screen_name %>
+    </td>
+    <td align="center">
+      <%= detection.tweets.author_null.size %>
+    </td>
+    <td align="center">
+      <%= detection.tweets.author_not_null.size %>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+</table>

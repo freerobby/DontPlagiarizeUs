@@ -1,0 +1,22 @@
+<% num_tweets = @detection.tweets.author_null.size %>
+<% if @detection.tweets.author_not_null.size == 0 %>
+  <h1><%= @detection.screen_name %> has not been plagiarized!</h1>
+  <p>We looked at <b><%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and didn't find any evidence that he/she has been plagiarized on Twitter.</p>
+<% else %>
+  <h1>Suspected plagiarism:</h1>
+    <p>We looked at <b><%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and found that he/she was copied elsewhere on Twitter:</p>
+  <ul>
+  <% @detection.tweets.author_not_null.each do |tweet| %>
+    <li>
+      <a href="http://twitter.com/<%= tweet.author %>/status/<%= tweet.twitter_id %>"><b><%= tweet.author %></b>: <%= tweet.text %></a><br />
+      <% plagiarized = Tweet.find(tweet.plagiarism_of)%>
+      <a href="http://twitter.com/<%= plagiarized.detection.screen_name %>/status/<%= plagiarized.twitter_id %>"><b><%= plagiarized.detection.screen_name %></b>: <%= plagiarized.text%> </a>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<p>
+  <%= link_to 'Look back further!', detection_path(:direction => :earlier), :method => :put %>
+</p>
+<p>
+  <%= link_to 'Look for more recent tweets', detection_path(:direction => :later), :method => :put %></p>

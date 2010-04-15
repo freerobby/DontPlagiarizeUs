@@ -1,0 +1,12 @@
+<% form_for(Detection.new) do |f| %>
+  <%= f.error_messages %>
+  <div style="min-height: 80px;">
+  <div style="width: 500px;">
+    <%= f.label "Enter screen name of account to detect:" %>
+    <%= f.text_field :screen_name %>
+  </div>
+  <div style="width: 500px;">
+    <%= f.submit "Find out if they've been plagiarized!", :class => "big_red_button" %>
+  </div>
+  </div>
+<% end %>
