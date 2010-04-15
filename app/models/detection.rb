@@ -31,18 +31,22 @@ class Detection < ActiveRecord::Base
   
   def search_for_plagiarism
     # client = get_twitter_client
-    
+    query = ""
     Tweet.user_id_eq(user.id).detection_id_eq(id).each do |tweet|
-      puts "Searching for plagiarism for: #{tweet.text}"
-      query = '"' + tweet.text + '"' + ' -RT -via' + " -#{user.login}"
-      results = Twitter::Search.new(query).fetch().results
-      results = [] if results.nil?
+      query += '"' + tweet.text.gsub(/"/, "'") + '" OR '
+    end
+    query += '"zxvzxcvzxcvzxcvzxc"' + ' -RT -via' + " -#{user.login}"
+    
+    puts "QUERY: #{query}"
+    
+    results = Twitter::Search.new(query).fetch().results
+    results = [] if results.nil?
       
-      results.each do |result|
-        puts "Plagiarism found: #{result.inspect}"
-        if Time.parse(result.created_at) >= tweet.tweeted_at
-          Tweet.create :user => user, :detection => self, :text => result.text, :twitter_id => result.id, :tweeted_at => result.created_at, :author => result.from_user, :plagiarism_of => tweet.id
-        end
+    results.each do |result|
+      puts "Plagiarism found: #{result.inspect}"
+      tweet = Tweet.find_by_text(result.text)
+      if Time.parse(result.created_at) >= tweet.tweeted_at
+        Tweet.create :user => user, :detection => self, :text => result.text, :twitter_id => result.id, :tweeted_at => result.created_at, :author => result.from_user, :plagiarism_of => tweet.id
       end
     end
   end
