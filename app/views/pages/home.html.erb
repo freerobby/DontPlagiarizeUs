@@ -1,1 +1,3 @@
-test
+<% if logged_in? %>
+  Want to detect plagiarism of your tweets? <%= link_to "Get started!", new_detection_path %>
+<% end %>

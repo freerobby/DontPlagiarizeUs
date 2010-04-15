@@ -6,7 +6,11 @@
   	<title>Don't Plagiarize!</title>
   </head>
   <body>
-    <% unless logged_in? %>
+    <% if logged_in? %>
+      <div id="logout">
+        <a href="/logout">Logout</a>
+      </div>
+    <% else %>
       <div id="login">
         <a href="/login">Get started - log in with Twitter!</a>
       </div>
