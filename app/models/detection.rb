@@ -20,7 +20,7 @@ class Detection < ActiveRecord::Base
     puts "last: #{last_tweet_twitter_id}"
     since_id = (last_tweet_twitter_id == 0) ? 1 : last_tweet_twitter_id
     timeline = client.user_timeline(:since_id => since_id, :count => 40)
-    puts "Found #{timeline.count} recent tweets."
+    puts "Found #{timeline.size} recent tweets."
     timeline.each do |tweet|
       puts "Saving tweet #{tweet.id}"
       Tweet.create :user => user, :detection => self, :text => tweet.text, :twitter_id => tweet.id, :tweeted_at => tweet.created_at
