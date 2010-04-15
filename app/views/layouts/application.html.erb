@@ -6,6 +6,11 @@
   	<title>Don't Plagiarize!</title>
   </head>
   <body>
+    <% unless logged_in? %>
+      <div id="login">
+        <a href="/login">Get started - log in with Twitter!</a>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
