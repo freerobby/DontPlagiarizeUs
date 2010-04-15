@@ -9,10 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100415054826) do
+ActiveRecord::Schema.define(:version => 20100415055338) do
 
   create_table "detections", :force => true do |t|
     t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tweets", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "detection_id"
+    t.string   "text"
+    t.string   "twitter_id"
+    t.datetime "tweeted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
