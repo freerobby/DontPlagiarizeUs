@@ -10,14 +10,19 @@ class DetectionsController < ApplicationController
     @detection = Detection.new
   end
   def create
-    detection = Detection.new(params[:detection])
-    if detection.save
-      detection.update_later!
-      flash[:notice] = "Your detections are complete!"
-      redirect_to profile_path(detection)
+    detection = Detection.find_by_screen_name(params[:detection][:screen_name])
+    if !detection.nil?
+      redirect_to detection_path(detection)
     else
-      flash[:error] = "Sorry, we couldn't run plagiarism detection on that."
-      redirect_to new_detection_path
+    detection = Detection.new(params[:detection])
+      if detection.save
+        detection.update_later!
+        flash[:notice] = "Your detections are complete!"
+        redirect_to profile_path(detection)
+      else
+        flash[:error] = "Sorry, we couldn't run plagiarism detection on that account."
+        redirect_to root_path
+      end
     end
   end
   def update

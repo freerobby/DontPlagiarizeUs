@@ -2,6 +2,7 @@ class Detection < ActiveRecord::Base
   has_many :tweets
   
   validates_uniqueness_of :screen_name
+  validates_presence_of :screen_name
   
   def to_param
     screen_name
