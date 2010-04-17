@@ -5,6 +5,7 @@ class DetectionsController < ApplicationController
   def show
     @detection = Detection.find_by_screen_name(params[:id])
     @detection = Detection.create(:screen_name => params[:id]) if @detection.nil?
+    @detection.update_later! if @detection.tweets.size == 0
   end
   def new
     @detection = Detection.new
