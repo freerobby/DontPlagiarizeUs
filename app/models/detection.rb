@@ -60,8 +60,8 @@ class Detection < ActiveRecord::Base
         results = [] if results.nil?
       
         results.each do |result|
-          puts "Plagiarism found: #{result.inspect}"
-          if Time.parse(result.created_at) >= tweet.tweeted_at
+          if Time.parse(result.created_at) >= tweet.tweeted_at && Tweet.find_by_twitter_id(tweet.id.to_s).nil?
+            puts "Plagiarism found for Tweet #{tweet.id}"
             Tweet.create :detection => self, :text => result.text, :twitter_id => result.id, :tweeted_at => result.created_at, :author => result.from_user, :plagiarism_of => tweet.id
           end
         end
