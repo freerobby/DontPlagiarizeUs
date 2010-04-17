@@ -3,6 +3,11 @@ class Tweet < ActiveRecord::Base
   
   validates_uniqueness_of :twitter_id, :scope => [:detection_id]
   
+  validates_presence_of :detection_id
+  validates_presence_of :text
+  validates_presence_of :tweeted_at
+  validates_presence_of :twitter_id
+  
   def is_original?
     author == nil
   end
