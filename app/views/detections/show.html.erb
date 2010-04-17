@@ -1,10 +1,10 @@
 <% num_tweets = @detection.tweets.author_null.size %>
 <% if @detection.tweets.author_not_null.size == 0 %>
   <h1><%= @detection.screen_name %> has not been plagiarized!</h1>
-  <p>We've looked at <b><%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and didn't find any evidence that he/she has been plagiarized on Twitter.</p>
+  <p>We've looked at <b>@<%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and didn't find any evidence that he/she has been plagiarized on Twitter.</p>
 <% else %>
   <h1>Suspected plagiarism:</h1>
-  <p>We looked at <b><%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and found that he/she was copied elsewhere on Twitter:</p>
+  <p>We looked at <b>@<%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and found that he/she was copied elsewhere on Twitter:</p>
   <%= display_key %>
   <ul>
     <% last_po = 0 %>
