@@ -9,10 +9,10 @@ class Tweet < ActiveRecord::Base
   validates_presence_of :twitter_id
   
   def is_original?
-    author == nil
+    plagiarism_of == nil
   end
   def is_fraud?
-    author != nil
+    !is_original?
   end
   
   def meets_prerequisites?

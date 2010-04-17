@@ -28,5 +28,28 @@ describe Tweet do
         Factory.create :tweet, :detection_id => nil
       }.should raise_error ActiveRecord::RecordInvalid
     end
+    it "exists only once for a given detection" do
+      first = Factory.create :tweet, :twitter_id => 25
+      lambda {
+        Factory.create :tweet, :twitter_id => 25, :detection => first.detection
+      }.should raise_error ActiveRecord::RecordInvalid
+    end
+  end
+  
+  describe "#is_original?" do
+    it "true if not plagiarism" do
+      (Factory.create :tweet, :plagiarism_of => nil).is_original?.should == true
+    end
+    it "false if plagiarism" do
+      (Factory.create :tweet, :plagiarism_of => 25).is_original?.should == false
+    end
+  end
+  describe "#is_fraud?" do
+    it "true if plagiarism" do
+      (Factory.create :tweet, :plagiarism_of => 25).is_fraud?.should == true
+    end
+    it "false if not plagiarism" do
+      (Factory.create :tweet, :plagiarism_of => nil).is_fraud?.should == false
+    end
   end
 end
