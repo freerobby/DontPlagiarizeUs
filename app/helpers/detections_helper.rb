@@ -10,15 +10,12 @@ module DetectionsHelper
     html
   end
   
-  def display_plagiarism_tweet(tweet, plagiarized_tweet)
-    plagiarized_text = plagiarized_tweet.text
+  def display_plagiarism_tweet(tweet)
     plagiarism_text = tweet.text
-    start = plagiarism_text.downcase.index(plagiarized_text.downcase)
-    finish = start + plagiarized_text.length unless start.nil?
-    if !start.nil? && !finish.nil? 
-      plagiarism_text.insert(finish, "</font>")
-      plagiarism_text.insert(start, "<font color=\"red\">")
-    else
+    if tweet.plagiarism_verbatim
+      plagiarism_text.insert(tweet.plagiarism_ends_at, "</font>")
+      plagiarism_text.insert(tweet.plagiarism_begins_at, "<font color=\"red\">")
+    elsif !tweet.plagiarism_of.nil?
       plagiarism_text.insert(0, "<font color=\"orange\">")
       plagiarism_text.insert(plagiarism_text.length, "</font>")
     end

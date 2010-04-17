@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100415212251) do
+ActiveRecord::Schema.define(:version => 20100417164701) do
 
   create_table "detections", :force => true do |t|
     t.datetime "created_at"
@@ -21,12 +21,15 @@ ActiveRecord::Schema.define(:version => 20100415212251) do
     t.integer  "detection_id"
     t.string   "text"
     t.string   "author"
-    t.string   "twitter_id"
     t.datetime "tweeted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "plagiarism_of"
     t.datetime "last_checked_if_plagiarized"
+    t.boolean  "plagiarism_verbatim",         :default => false
+    t.integer  "plagiarism_begins_at"
+    t.integer  "plagiarism_ends_at"
+    t.integer  "twitter_id",                  :default => 0
   end
 
 end

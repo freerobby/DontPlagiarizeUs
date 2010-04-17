@@ -6,24 +6,18 @@
   <h1>Suspected plagiarism:</h1>
   <p>We looked at <b>@<%= @detection.screen_name %></b>'s last <b><%= num_tweets %></b> tweets and found that he/she was copied elsewhere on Twitter:</p>
   <%= display_key %>
-  <ul>
-    <% last_po = 0 %>
-    <% plagiarized = nil %>
-    <% @detection.tweets.plagiarism_of_not_null.descend_by_plagiarism_of.each do |tweet| %>
-      <% if last_po != tweet.plagiarism_of && last_po > 0 %>
-        </li>
-      <% end %>
-      <% if last_po != tweet.plagiarism_of %>
-        <li>
-        <% plagiarized = Tweet.find(tweet.plagiarism_of)%>
-        <%= display_plagiarized_tweet(plagiarized) %>
-        
-        <% last_po = tweet.plagiarism_of %>
-      <% end %>
-      <%= display_plagiarism_tweet(tweet, plagiarized) %>
+  <% @detection.tweets.author_null.plagiarism_of_null.each do |tweet| %>
+    <% if Tweet.plagiarism_of_eq(tweet.id).count > 0 %>
+    <ul>
+      <li>
+        <%= display_plagiarized_tweet(tweet) %>
+        <% Tweet.plagiarism_of_eq(tweet.id).detection_id_eq(@detection.id).each do |plagiarism| %>
+          <%= display_plagiarism_tweet(plagiarism) %>
+        <% end %>
+      </li>
+    </ul>
     <% end %>
-    </li>
-  </ul>
+  <% end %>
 <% end %>
 <!-- <p> -->
   <%= link_to 'Look back further!', detection_path(:direction => :earlier), :method => :put, :class => 'big_red_button' %>

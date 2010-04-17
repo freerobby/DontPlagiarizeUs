@@ -9,7 +9,8 @@
   <tr>
     <th>Twitter User</th>
     <th>Tweets Examined</th>
-    <th>Times Plagiarized</th>
+    <th>Directly Plagiarized</th>
+    <th>Possibly Plagiarized</th>
   </tr>
 </thead>
 <tbody>  
@@ -22,7 +23,10 @@
       <%= detection.tweets.plagiarism_of_null.size %>
     </td>
     <td align="center">
-      <%= detection.tweets.plagiarism_of_not_null.size %>
+      <%= detection.tweets.plagiarism_verbatim_eq(true).size %>
+    </td>
+    <td align="center">
+      <%= detection.tweets.plagiarism_of_not_null.plagiarism_verbatim_eq(false).size %>
     </td>
   </tr>
 <% end %>
