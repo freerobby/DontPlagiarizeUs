@@ -1,8 +1,13 @@
 class Detection < ActiveRecord::Base
+  cattr_reader :per_page
+  @@per_page = 15
+  
   has_many :tweets
   
   validates_uniqueness_of :screen_name
   validates_presence_of :screen_name
+  
+  named_scope :most_plagiarized, :select => 'detections.*', :order => '(SELECT COUNT(*) FROM tweets WHERE detections.id=detection_id AND plagiarism_of IS NOT NULL) DESC'
   
   def to_param
     screen_name

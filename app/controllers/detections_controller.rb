@@ -1,6 +1,6 @@
 class DetectionsController < ApplicationController
   def index
-    @detections = Detection.screen_name_not_blank
+    @detections = Detection.most_plagiarized.paginate(:page => params[:page] || 1)
   end
   def show
     @detection = Detection.find_by_screen_name(params[:id])
